@@ -17,7 +17,7 @@ def get_db():
         host="localhost",   #localhost sur les machines perso.
         user="lbesson4",
         password="2609",
-        database="BDD_PROJETWEB",
+        database="BDD_SAE",
         port=8889,
         charset='utf8mb4',                      # 2 attributs à ajouter
         cursorclass=pymysql.cursors.DictCursor  # 2 attributs à ajouter
@@ -37,7 +37,7 @@ def show_accueil():
 @app.route('/consomme/show')
 def show_consomme():
     mycursor = get_db().cursor()
-    sql = "SELECT id_type_epoque AS id, libelle FROM type_epoque ORDER BY id_type_epoque;"
+    sql = "SELECT * FROM Consommation ORDER BY id_consommation;"
     mycursor.execute(sql)
-    typeEpoque = mycursor.fetchall()
-    return render_template('typeEpoque/show_typeEpoque.html', typeEpoque=typeEpoque)
+    consomme = mycursor.fetchall()
+    return render_template('consomme/show_consomme.html', consomme=consomme)
