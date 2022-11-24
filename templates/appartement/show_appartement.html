@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    <title>Afficher les appartements</title>
+{% endblock %}
+
+{% block body %}
+<h3>Appartements</h3>
+<a class="btn btn-primary" href="/appartement/add">Ajouter un appartement</a>
+<br><br>
+
+<table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>CodeAppartement</th><th>Surface</th>
+            <th>NumEtage</th><th>NumPorte</th><th>IdType</th><th>NumImmeuble</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% if appartement | length >= 1 %}
+        {% for ligne in appartement %}
+           <tr>
+                  <td>{{ ligne.CodeAppartement }}</td>
+                  <td>{{ ligne.Surface }}</td>
+                  <td>{{ ligne.NumEtage }}</td>
+                  <td>{{ ligne.NumPorte}}</td>
+                  <td>{{ ligne.IdType}}</td>
+                  <td>{{ ligne.NumImmeuble }}</td>
+                  <td>
+                      <a class="btn btn-success" href="/typeEpoque/edit?id={{ ligne.id }}&amp;param2={{ligne.libelle}}">Editer</a>&nbsp;
+                      <a class="btn btn-danger" href="/typeEpoque/delete?id={{ ligne.id }}" >Supprimer</a>
+                  </td>
+           </tr>
+        {% endfor %}
+    {% else %}
+            <tr>
+                  <td>
+                      Pas d'appartement
+                  </td>
+           </tr>
+    {% endif %}
+    </tbody>
+</table>
+{% endblock %}
