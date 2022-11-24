@@ -1,28 +1,30 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-    <title>afficher les consommation</title>
+    <title>Afficher les appartements</title>
 {% endblock %}
 
 {% block body %}
-<h3>Types de consomation</h3>
-<a class="btn btn-primary" href="/consomme/add">Ajouter un type de consommation</a>
+<h3>Appartements</h3>
+<a class="btn btn-primary" href="/appartement/add">Ajouter un appartement</a>
 <br><br>
 
 <table class="table table-hover">
     <thead class="thead-dark">
         <tr>
-            <th>id_consommation</th><th>numMois</th><th>quantite</th><th>IdCharge</th><th>NumImmeuble</th>
+            <th>CodeAppartement</th><th>Surface</th>
+            <th>NumEtage</th><th>NumPorte</th><th>IdType</th><th>NumImmeuble</th>
         </tr>
     </thead>
     <tbody>
-    {% if consomme | length >= 1 %}
-        {% for ligne in consomme %}
+    {% if appartement | length >= 1 %}
+        {% for ligne in appartement %}
            <tr>
-                  <td>{{ ligne.id_consommation }}</td>
-                  <td>{{ ligne.numMois }}</td>
-                  <td>{{ ligne.quantite }}</td>
-                  <td>{{ ligne.IdCharge }}</td>
+                  <td>{{ ligne.CodeAppartement }}</td>
+                  <td>{{ ligne.Surface }}</td>
+                  <td>{{ ligne.NumEtage }}</td>
+                  <td>{{ ligne.NumPorte}}</td>
+                  <td>{{ ligne.IdType}}</td>
                   <td>{{ ligne.NumImmeuble }}</td>
                   <td>
                       <a class="btn btn-success" href="/typeEpoque/edit?id={{ ligne.id }}&amp;param2={{ligne.libelle}}">Editer</a>&nbsp;
@@ -33,7 +35,7 @@
     {% else %}
             <tr>
                   <td>
-                      Pas de cosommation
+                      Pas d'appartement
                   </td>
            </tr>
     {% endif %}
