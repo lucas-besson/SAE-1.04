@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    <title>afficher les consommation</title>
+{% endblock %}
+
+{% block body %}
+<h3>Types de consomation</h3>
+<a class="btn btn-primary" href="/consomme/add">Ajouter un type de consommation</a>
+<br><br>
+
+<table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>id</th><th>designation</th><th>opération</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% if typeEpoque | length >= 1 %}
+        {% for ligne in typeEpoque %}
+           <tr>
+                  <td>{{ ligne.id }}</td>
+                  <td>{{ ligne.libelle }}</td>
+                  <td>
+                      <a class="btn btn-success" href="/typeEpoque/edit?id={{ ligne.id }}&amp;param2={{ligne.libelle}}">Editer</a>&nbsp;
+                      <a class="btn btn-danger" href="/typeEpoque/delete?id={{ ligne.id }}" >Supprimer</a>
+                  </td>
+           </tr>
+        {% endfor %}
+    {% else %}
+            <tr>
+                  <td>
+                      Pas de type d'époque
+                  </td>
+           </tr>
+    {% endif %}
+    </tbody>
+</table>
+{% endblock %}

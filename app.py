@@ -1,12 +1,43 @@
-from flask import Flask
+from flask import Flask, request, render_template, redirect, flash, session, g
+import pymysql.cursors
 
-app = Flask(__name__)
+# application WSGI
+# (interface de serveur web python)
+# comportements et methodes d'un serveur web
 
+app = Flask(__name__)    # instance de classe Flask (en parametre le nom du module)
+app.secret_key = 'une cle(token) : grain de sel(any random string)'
+
+
+# mysql --user=votreLogin  --password=votreMotDePasse --host=serveurmysql --database=BDD_votreLogin
+
+def get_db():
+    if 'db' not in g:
+        g.db =  pymysql.connect(    #pymysql.connect remplace mysql.connector
+        host="localhost",   #localhost sur les machines perso.
+        user="lbesson4",
+        password="2609",
+        database="BDD_PROJETWEB",
+        port=8889,
+        charset='utf8mb4',                      # 2 attributs à ajouter
+        cursorclass=pymysql.cursors.DictCursor  # 2 attributs à ajouter
+)
+    return g.db
+
+@app.teardown_appcontext
+def teardown_db(exception):
+    db = g.pop('db', None)
+    if db is not None:
+        db.close()
 
 @app.route('/')
-def hello_world():  # put application's code here
-    return 'Hello World!'
+def show_accueil():
+    return render_template('layout.html')
 
-
-if __name__ == '__main__':
-    app.run()
+@app.route('/consomme/show')
+def show_consomme():
+    mycursor = get_db().cursor()
+    sql = "SELECT id_type_epoque AS id, libelle FROM type_epoque ORDER BY id_type_epoque;"
+    mycursor.execute(sql)
+    typeEpoque = mycursor.fetchall()
+    return render_template('typeEpoque/show_typeEpoque.html', typeEpoque=typeEpoque)
