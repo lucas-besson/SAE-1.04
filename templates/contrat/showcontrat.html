@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    <title>afficher les contrats</title>
+{% endblock %}
+
+{% block body %}
+<h3>CONTRATS</h3>
+<a class="btn btn-primary" href="/contrat/add">Ajouter un contrat</a>
+<br><br>
+
+<table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>NumContrat</th><th>Date_début</th><th>Date_fin</th><th>PrixLoyer</th><th>idLocataire</th><th>CodeAppartement</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% if contrat | length >= 1 %}
+        {% for ligne in contrat %}
+           <tr>
+                  <td>{{ ligne.NumContrat }}</td>
+                  <td>{{ ligne.Date_début }}</td>
+                  <td>{{ ligne.Date_fin }}</td>
+                  <td>{{ ligne.PrixLoyer }}</td>
+                  <td>{{ ligne.idLocataire }}</td>
+                    <td>{{ ligne.CodeAppartement }}</td>
+
+                  <td>
+                      <a class="btn btn-success" href="/contrat/edit?id={{ ligne.NumContrat }}&amp;param2={{ligne.libelle}}">Editer</a>&nbsp;
+                      <a class="btn btn-danger" href="/contrat/delete?id={{ ligne.NumContrat}}" >Supprimer</a>
+                  </td>
+           </tr>
+        {% endfor %}
+    {% else %}
+            <tr>
+                  <td>
+                      Pas de cosommation
+                  </td>
+           </tr>
+    {% endif %}
+    </tbody>
+</table>
+{% endblock %}

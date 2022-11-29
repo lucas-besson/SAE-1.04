@@ -42,10 +42,10 @@ def get_db():
             # charset='utf8mb4',
             # cursorclass=pymysql.cursors.DictCursor
 
-            host="serveurmysql",                 # à modifier
-            user="aladel",                     # à modifier
-            password="0104",                # à modifier
-            database="BDD_aladel",        # à modifier
+            host="localhost",                 # à modifier
+            user="nmarech6",                     # à modifier
+            password="0609",                # à modifier
+            database="BDD_nmarech6",        # à modifier
             charset='utf8mb4',
             cursorclass=pymysql.cursors.DictCursor
         )
@@ -93,6 +93,23 @@ def show_consomme():
     return render_template('consomme/show_consomme.html', consomme=consomme)
 
 # Nathan -----------------------------------------------
+
+@app.route('/contrat/show')
+def show_contrat():
+    mycursor = get_db().cursor()
+    sql = "SELECT * FROM Contrat ORDER BY NumContrat;"
+    mycursor.execute(sql)
+    contrat = mycursor.fetchall()
+    return render_template('contrat/showcontrat.html', contrat=contrat)
+
+@app.route('/contrat/delete', methods=['GET'])
+def delete_ville():
+    num_contrat = request.args.get('NumContrat', '')
+    mycursor = get_db().cursor()
+    sql = "DELETE FROM Contrat WHERE NumContrat=%s"
+    mycursor.execute(sql, (num_contrat))
+    get_db().commit()
+    return redirect('/contrat/show')
 
 # Matthieu -----------------------------------------------
 
