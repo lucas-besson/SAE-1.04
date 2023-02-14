@@ -1,19 +1,18 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-    <title>Afficher les appartements</title>
+    <title>afficher les appartements</title>
 {% endblock %}
 
 {% block body %}
-<h3>Appartements</h3>
+<h3>Appartement</h3>
 <a class="btn btn-primary" href="/appartement/add">Ajouter un appartement</a>
 <br><br>
 
 <table class="table table-hover">
     <thead class="thead-dark">
         <tr>
-            <th>CodeAppartement</th><th>Surface</th>
-            <th>NumEtage</th><th>NumPorte</th><th>IdType</th><th>NumImmeuble</th>
+            <th>Code d'Appartement</th><th>Surface</th><th>Numéro d'étage</th><th>Numéro de porte</th><th>Id du Type</th><td>Numéro d'immeuble</td>
         </tr>
     </thead>
     <tbody>
@@ -23,12 +22,12 @@
                   <td>{{ ligne.CodeAppartement }}</td>
                   <td>{{ ligne.Surface }}</td>
                   <td>{{ ligne.NumEtage }}</td>
-                  <td>{{ ligne.NumPorte}}</td>
-                  <td>{{ ligne.IdType}}</td>
+                  <td>{{ ligne.NumPorte }}</td>
+                  <td>{{ ligne.IdType }}</td>
                   <td>{{ ligne.NumImmeuble }}</td>
                   <td>
-                      <a class="btn btn-success" href="/typeEpoque/edit?id={{ ligne.id }}&amp;param2={{ligne.libelle}}">Editer</a>&nbsp;
-                      <a class="btn btn-danger" href="/typeEpoque/delete?id={{ ligne.id }}" >Supprimer</a>
+                      <a class="btn btn-success" href="/appartement/edit?id={{ ligne.CodeAppartement }}&amp;param2={{ligne.libelle}}">Editer</a>&nbsp;
+                      <a class="btn btn-danger" href="/appartement/delete?id={{ ligne.CodeAppartement }}" >Supprimer</a>
                   </td>
            </tr>
         {% endfor %}

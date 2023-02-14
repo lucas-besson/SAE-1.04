@@ -5,14 +5,14 @@
 {% endblock %}
 
 {% block body %}
-<h3>Types de consomation</h3>
-<a class="btn btn-primary" href="/consomme/add">Ajouter un type de consommation</a>
+<h3>Types de consommations</h3>
+<a class="btn btn-primary" href="/consomme/add">Ajouter une consommation</a>
 <br><br>
 
 <table class="table table-hover">
     <thead class="thead-dark">
         <tr>
-            <th>id_consommation</th><th>numMois</th><th>quantite</th><th>IdCharge</th><th>NumImmeuble</th>
+            <th>Identifiant de la Consommation</th><th>Numéro de Mois</th><th>Quantité(s)</th><th>Type de Charge</th><th>Numéro de l'Immeuble</th><td>Modification</td>
         </tr>
     </thead>
     <tbody>
@@ -22,18 +22,18 @@
                   <td>{{ ligne.id_consommation }}</td>
                   <td>{{ ligne.numMois }}</td>
                   <td>{{ ligne.quantite }}</td>
-                  <td>{{ ligne.IdCharge }}</td>
-                  <td>{{ ligne.NumImmeuble }}</td>
+                  <td>{{ ligne.LibellerTypeCharge }}</td>
+                  <td>{{ ligne.NumImmeuble }} ({{ ligne.Adresse }})</td>
                   <td>
-                      <a class="btn btn-success" href="/typeEpoque/edit?id={{ ligne.id }}&amp;param2={{ligne.libelle}}">Editer</a>&nbsp;
-                      <a class="btn btn-danger" href="/typeEpoque/delete?id={{ ligne.id }}" >Supprimer</a>
+                      <a class="btn btn-success" href="/consomme/edit?id={{ ligne.id_consommation }}&amp;param2={{ligne.libelle}}">Editer</a>&nbsp;
+                      <a class="btn btn-danger" href="/consomme/delete?id={{ ligne.id_consommation }}" >Supprimer</a>
                   </td>
            </tr>
         {% endfor %}
     {% else %}
             <tr>
                   <td>
-                      Pas de cosommation
+                      Il y a aucune consommation enregistrer. Vous pouvez dès à présent en ajouter une en cliquant sur le bouton "Ajouter une consommation".
                   </td>
            </tr>
     {% endif %}

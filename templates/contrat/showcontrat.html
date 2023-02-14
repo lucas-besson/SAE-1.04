@@ -20,15 +20,15 @@
         {% for ligne in contrat %}
            <tr>
                   <td>{{ ligne.NumContrat }}</td>
-                  <td>{{ ligne.Date_début }}</td>
+                  <td>{{ ligne.Date_debut }}</td>
                   <td>{{ ligne.Date_fin }}</td>
                   <td>{{ ligne.PrixLoyer }}</td>
-                  <td>{{ ligne.idLocataire }}</td>
+                  <td>{{ ligne.IdLocataire }}</td>
                     <td>{{ ligne.CodeAppartement }}</td>
 
                   <td>
-                      <a class="btn btn-success" href="/contrat/edit?id={{ ligne.NumContrat }}&amp;param2={{ligne.libelle}}">Editer</a>&nbsp;
-                      <a class="btn btn-danger" href="/contrat/delete?id={{ ligne.NumContrat}}" >Supprimer</a>
+                      <a class="btn btn-success" href="/contrat/edit?NumContrat={{ ligne.NumContrat }}">Editer</a>
+                      <a class="btn btn-danger" href="/contrat/delete?NumContrat={{ ligne.NumContrat}}" >Supprimer</a>
                   </td>
            </tr>
         {% endfor %}
