@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    <title>ajouter une location</title>
+{% endblock %}
+
+{% block body %}
+  <h2>ajout d'une location</h2>
+  {% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
+  <form method="post" action="/amenagement/add" >
+    <fieldset>
+        <legend> Créer une location</legend>
+
+        <label for="TypeAmenagement">TypeAmenagement</label><br>
+        <input id="TypeAmenagement" type="text" name="TypeAmenagement" size="18" value="" placeholder="Saisir le TypeAmenagement" required><br>
+
+        <input type="submit" value="Creer" name="Valider" >
+    </fieldset>
+  </form>
+{% endblock %}

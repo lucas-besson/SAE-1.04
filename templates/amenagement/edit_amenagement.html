@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    <title>modifier une location</title>
+{% endblock %}
+
+{% block body %}
+  <h2>modifier une location</h2>
+  {% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
+  <form method="post" action="/amenagement/edit">
+    <fieldset>
+        <legend> Modifier une location</legend>
+        <input type="hidden" name="IdAmenagement" size="18" value="{{ amenagements.IdAmenagement }}" id="IdAmenagement">
+        <label for="TypeAmenagement">TypeAmenagement</label><br>
+        <input type="text" name="TypeAmenagement" size="18" value="{{ amenagements.TypeAmenagement }}" id="TypeAmenagement" required><br>
+        <input type="submit" value="Modifier" name="Modifier" >
+    </fieldset>
+  </form>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    <title class="text-primary">ajouter un ski</title>
+{% endblock %}
+
+{% block body %}
+    <h2>Ajout d'un Immeuble</h2>
+    {% if error %}
+        <p class=error><strong>Error:</strong> {{ error }}
+    {% endif %}
+    <form method="post" action="/immeuble/add" >
+        <fieldset>
+            <div class="form-group col-md-2">
+                <label for="adresse">Adresse :</label><br>
+                <input class="form-control" id="adresse" type="text" name="adresse" max="128" placeholder="Ex: 12 rue de Strasbourg 90000 Belfort " required><br>
+                <label for="nbAppart">Nombre d'appartements :</label><br>
+                <input class="form-control" id="nbAppart" type="number" name="nbAppart" placeholder="Ex: 1 " required><br>
+
+                <input class="btn btn-primary" type="submit" value="Creer" name="Valider" >
+                <a href="show" class="btn btn-danger">Annuler</a>
+            </div>
+        </fieldset>
+    </form>
+{% endblock %}

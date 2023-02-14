@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  <title>afficher les appartements dans l'immeuble</title>
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h3 class="text-primary">Immeubles {{ immeuble.NumImmeuble }}, {{ immeuble.Adresse }}</h3>
+        <br>
+        <br>
+        <div class="container-fluid">
+            <table class="table text-primary table-striped table-bordered">
+                <thead class="table-dark">
+                <tr>
+                    <th>Code Appartement</th>
+                    <th>Surface</th>
+                    <th>Numéro d'Etage</th>
+                    <th>Numéro de Porte</th>
+                    <th>Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if appartements | length >= 1 %}
+                    {% for appartement in appartements %}
+                    <tr>
+                        <td class="text-dark">{{ appartement.CodeAppartement }}</td>
+                        <td class="text-dark">{{ appartement.Surface }}</td>
+                        <td class="text-dark">{{ appartement.NumEtage }}</td>
+                        <td class="text-dark">{{ appartement.NumPorte}}</td>
+                        <td class="text-dark">
+                            {% for type_appart in type_apparts %}
+                                {% if type_appart.IdType == appartement.IdType %}
+                                    {{ type_appart.CategorieAppartement }}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                <tr>
+                    <td>
+                        pas de d'appartement
+                    </td>
+                </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

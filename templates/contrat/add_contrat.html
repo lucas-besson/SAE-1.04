@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    <title>ajouter un type de consommation</title>
+{% endblock %}
+
+{% block body %}
+  <h2>Ajout d'un type de consommation</h2>
+  {% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
+  <form method="post" action="/contrat/add" >
+    <fieldset>
+        <div class="form-group col-md-2">
+            <label  for="libelle"> Numéro de contrat</label><br>
+                <input class="form-control" type="number" name="NumContrat" value="{{ Contrat.NumContrat }}" id="NumContrat" required>
+                <label for="libelle">Date de début :</label><br>
+                <input class="form-control" type="date" name="Date_debut" value="{{ Contrat.Date_debut }}" id="Date_debut" required><br>
+                <label for="libelle">Date de fin :</label><br>
+                <input class="form-control" type="date" name="Date_fin" value="{{ Contrat.Date_fin }}" id="Date_fin" required><br>
+                <label for="libelle">Code de l'appartement  :</label><br>
+            <select class="form-select" name="CodeAppartement" required>
+            {% for type in Appartement %}
+                <option value="{{ type.CodeAppartement }}"
+                {% if Contrat.CodeAppartement is defined and type.CodeAppartement ==  Contrat.CodeAppartement %}selected{% endif %}
+                > {{ type.CodeAppartement }} </option>
+            {% endfor %}
+            </select><br>
+                <label for="libelle">prix du loyer :</label><br>
+                <input class="form-control" type="number" name="PrixLoyer"  value="{{ Contrat.PrixLoyer }}" id="PrixLoyer" required><br>
+                <label for="libelle"> Identifiant du locataire :</label><br>
+            <select class="form-select" name="IdLocataire" required>
+            {% for type in Locataire %}
+                <option value="{{ type.IdLocataire }}"
+                {% if Contrat.IdLocataire is defined and type.IdLocataire == Contrat.IdLocataire %}selected{% endif %}
+                > {{ type.IdLocataire }} </option>
+            {% endfor %}
+            </select><br>
+            <input class="btn btn-primary" type="submit" value="Editer" name="Valider" >
+            <a href="/contrat/show" class="btn btn-danger">Annuler</a>
+        </div>
+    </fieldset>
+  </form>
+{% endblock %}

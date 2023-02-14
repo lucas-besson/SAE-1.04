@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    <title>ajouter un appartement</title>
+{% endblock %}
+
+{% block body %}
+  <h2>Ajout d'un appartement</h2>
+  {% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
+  <form method="post" action="/appartement/add" >
+    <fieldset>
+        <div class="form-group col-md-2">
+            <input type="hidden" name="CodeAppartement" size="18" id="CodeAppartement">
+            <label for="Surface">Surface</label><br>
+            <input class="form-control" type="number" name="Surface" id="Surface" placeholder="" required><br>
+            <label for="libelle">NumEtage</label><br>
+            <input class="form-control" type="text" name="NumEtage"  id="NumEtage" placeholder="" required><br>
+            <label for="libelle">NumPorte</label><br>
+            <input class="form-control" type="text" name="NumPorte"id="NumPorte" placeholder="" required><br>
+            <label for="libelle">IdType</label><br>
+            <input class="form-control" type="text" name="IdType" id="IdType" placeholder="" required><br>
+            <label for="CodeAppartement">Numéro d'Immeuble :</label><br>
+            <select class="form-select" name="NumImmeuble" required>
+            {% for type in immeuble %}
+                <option value="{{ type.NumImmeuble }}"
+                {% if appartement.NumImmeuble is defined and type.NumImmeuble == appartement.NumImmeuble %}selected{% endif %}
+                > {{ type.NumImmeuble }} </option>
+            {% endfor %}
+            </select><br>
+
+            <input class="btn btn-primary" type="submit" value="Creer" name="Valider" >
+            <a href="show" class="btn btn-danger">Annuler</a>
+        </div>
+    </fieldset>
+  </form>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    <title>afficher les amenagement</title>
+{% endblock %}
+
+{% block body %}
+<h3>amenagement</h3>
+<a class="btn btn-outline-success" href="/amenagement/add">ajouter une amenagement</a>
+<br><br>
+
+<table class="table text-primary table-striped table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>IdAmenagement</th>
+            <th>TypeAmenagement</th>
+            <th>Edit</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% if amenagement | length >= 1 %}
+        {% for ligne in amenagement %}
+           <tr>
+                  <td class="text-dark">{{ ligne.IdAmenagement }}</td>
+                  <td class="text-dark">{{ ligne.TypeAmenagement }}</td>
+                  <td>
+                      <a class="btn btn-outline-success" href="/amenagement/edit?IdAmenagement={{ligne.IdAmenagement}}&amp;TypeAmenagement={{ ligne.TypeAmenagement }}&amp;param2={{ligne.Id_utilisateur}}">editer</a>&nbsp;
+                      <a class="btn btn-outline-danger" href="/amenagement/delete?IdAmenagement={{ ligne.IdAmenagement }}">supprimer</a>
+                  </td>
+           </tr>
+        {% endfor %}
+    {% else %}
+            <tr>
+                  <td>
+                      pas de amenagement
+                  </td>
+           </tr>
+    {% endif %}
+    </tbody>
+</table>
+{% endblock %}

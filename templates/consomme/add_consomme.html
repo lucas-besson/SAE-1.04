@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    <title>Ajouter une consommation</title>
+{% endblock %}
+
+{% block body %}
+  <h2>Ajout d'un type de consommation</h2>
+  {% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
+  <form method="post" action="/consomme/add" >
+    <fieldset>
+        <div class="form-group container-md">
+            <label for="libelle">Numéro de mois :</label><br>
+            <input class="form-control" id="numMois" type="number" name="numMois" max="12" placeholder="Ex: 12(Décembre) " required><br>
+            <label for="libelle">Quantité(s) :</label><br>
+            <input class="form-control" id="quantite" type="text" name="quantite" placeholder="Ex: 1200 L " required><br>
+            <label for="libelle">Type de charge  :</label><br>
+            <select class="form-select" name="IdCharge" required>
+            <label for="libelle">Type de Charge :</label><br>
+            <option value=""> Sélectionner type de charge...</option>
+
+            {% for type in typeCharges %}
+                     <option value="{{ type.IdCharge }}"> {{ type.LibellerTypeCharge }} </option>
+            {% endfor %}
+            </select><br>
+            <label for="libelle">Numéro d'Immeuble :</label><br>
+            <select class="form-select" name="NumImmeuble" required>
+            <option value=""> Sélectionner Numéro d'immeuble...</option>
+            {% for type in immeuble %}
+                     <option value="{{ type.NumImmeuble }}"> {{ type.NumImmeuble }} , ({{ type.Adresse }}) </option>
+            {% endfor %}
+            </select><br>
+
+            <div style="text-align: center">
+                <a href="show" class="btn btn-danger">Annuler</a>
+                <input class="btn btn-primary" type="submit" value="Creer" name="Valider">
+            </div>
+        </div>
+    </fieldset>
+  </form>
+{% endblock %}

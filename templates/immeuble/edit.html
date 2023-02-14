@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  <title>modifier un immeuble</title>
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <h2 class="text-primary">modifier un immeuble</h2>
+    {% if error %}
+      <p class=error><strong>Error:</strong> {{ error }}
+    {% endif %}
+    <form class="text-primary" method="post" action="/immeuble/edit">
+      <fieldset>
+        <legend>Modifier un immeuble</legend>
+        <input type="hidden" name="id" size="18" value="{{ immeuble.NumImmeuble }}" id="id">
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="adresse">Adresse</label>
+          <input class="form-control" type="text" name="adresse" size="18" placeholder="{{ immeuble.Adresse }}" value="{{ immeuble.Adresse }}" id="adresse">
+        </div>
+        <div class="input-group">
+          <label class="input-group-text" for="nbAppart">Nombre d'appartements</label><br>
+          <input class="form-select" type="text" name="nbAppart" size="18" placeholder="{{ immeuble.NbAppartement }}" value="{{ immeuble.NbAppartement }}" id="nbAppart"><br>
+        </div>
+        <br >
+        <input class="btn btn-outline-success" type="submit" value="Modifier" name="Modifier" >
+      </fieldset>
+    </form>
+  </div>
+{% endblock %}

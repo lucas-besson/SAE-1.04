@@ -1,0 +1,177 @@
+{% extends 'layout.html' %}
+{% block title %}
+    <title>Etat des Consommation</title>
+{% endblock %}
+
+{% block body %}
+    <h3 class="title">Etat des Consommations</h3>
+    <br><br>
+    <div class="container">
+        <div class="container">
+            <div class="row align-self-right">
+                <div class="col-7"> </div>
+                    <div class="col">
+                        <form method="post" action="/consomme/etat">
+                            <div class="form-check">
+                                {% if itemFitre is defined %}
+                                    <div class="form-group">
+                                        <h3>Type de consommation : </h3>
+                                        {% for itemFiltre in itemFitre %}
+                                                <div>
+                                                    <input type="checkbox" name="{{itemFiltre.IdCharge}}" id="{{itemFiltre.IdCharge}}" value="{{itemFiltre.IdCharge}}"
+                                                    {% set idItem = itemFitre.IdCharge | string %}
+                                                    {% if session['filter_items']==itemFiltre.IdCharge %}
+                                                            {{ 'checked' if (idItem in session['filter_items']) else '' }}
+                                                    {% endif %}
+                                                    >
+                                                    <label style="cursor: pointer", for="{{itemFiltre.IdCharge}}">{{itemFiltre.LibellerTypeCharge}}</label>
+                                                </div>
+                                            {% endfor %}
+                                        {% else %}
+                                            <tr>
+                                                <td>
+                                                    Pas de type de charge
+                                                </td>
+                                            </tr>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <br>
+                            <button type="submit" class="btn btn-primary">Filtrer</button>
+                            <a href="etat" class="btn btn-danger">Annuler</a>
+                        </form>
+                    </div>
+            </div>
+        </div>
+
+            <div class="p-3 mb-2 bg-light text-dark" style="margin-top: 3%">
+                <h3> Les Consommations : </h3>
+            </div>
+                        <table class="table table-hover">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Identifiant de la consommation</th><th>Numero de Mois</th><th>Quantité(s)</th><th>Type de Charge</th><th>Numéro Immeuble</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% if consomme | length >= 1 %}
+                                {% for ligne in consomme %}
+                                   <tr>
+                                          <td>{{ ligne.id_consommation }}</td>
+                                          <td>{{ ligne.numMois }}</td>
+                                          <td>{{ ligne.quantite }}</td>
+                                          <td>{{ ligne.LibellerTypeCharge }}</td>
+                                          <td>{{ ligne.NumImmeuble }} ({{ ligne.Adresse }})</td>
+                                   </tr>
+                                {% endfor %}
+                            {% else %}
+                                    <tr>
+                                          <td>
+                                              Pas de consommation
+                                          </td>
+                                   </tr>
+                            {% endif %}
+                            </tbody>
+                        </table>
+                {%if conteur1 is defined %}
+                    <div class="p-3 mb-2 bg-light text-dark" style="margin-top: 3%">
+                        <h3> Nombre de batiments qui consomme plus de 5000L d'eaux pour le mois de décembre : {{ conteur1.total }} </h3>
+                    </div>
+                {% endif %}
+
+                {%if resconteur is defined %}
+                        <table class="table table-hover">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Identifiant de la consommation</th><th>Numero de Mois</th><th>Quantité(s)</th><th>Type de Charge</th><th>Numéro Immeuble</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% if resconteur | length >= 1 %}
+                                {% for ligne in resconteur %}
+                                    <tr>
+                                        <td>{{ ligne.id_consommation }}</td>
+                                        <td>{{ ligne.numMois }}</td>
+                                        <td>{{ ligne.quantite }}</td>
+                                        <td>{{ ligne.LibellerTypeCharge }}</td>
+                                        <td>{{ ligne.NumImmeuble }} ({{ ligne.Adresse }})</td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td>
+                                        Pas de consommation
+                                    </td>
+                                </tr>
+                            {% endif %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+
+                {%if analyseCharge is defined %}
+                    <div class="p-3 mb-2 bg-light text-dark" style="margin-top: 3%">
+                        <h3> Nombre totale de consommation enregistrée : {{ totalCharge.total }}  </h3>
+                    </div>
+                    <table class="table table-hover">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Type de Consommation</th><th>Nombre de consommation enregistré </th><th>Quantité(s) Totale</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% if analyseCharge | length >= 1 %}
+                                {% for ligne in analyseCharge %}
+                                    <tr>
+                                        <td>{{ ligne.Libelle }}</td>
+                                        <td>{{ ligne.Nbr }}</td>
+                                        <td>{{ ligne.ConmQte }}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td>
+                                        Pas de consommation
+                                    </td>
+                                </tr>
+                            {% endif %}
+                            </tbody>
+                        </table>
+                {% endif %}
+
+                {%if eau and ordure and gaz and elec is defined %}
+                    <div>
+                        <h3> Ci-dessous, un graphique* qui représente les données du tableau précédent :</h3>
+                        <p>*Celui-ci s'affiche si au moins une consommation de chaque type (Eau,Électricite,Gaz,Ordure) a été préalablement rempli.</p>
+                    </div>
+                    <canvas id="bar-chart" height="110"></canvas>
+                    <script>
+                        // Bar chart
+                        let eau = {{eau.qte}};
+                        let elec = {{elec.qte}};
+                        let gaz = {{gaz.qte}};
+                        let ordure ={{ordure.qte}} ;
+
+                        new Chart(document.getElementById("bar-chart"), {
+                            type: 'bar',
+                            data: {
+                              labels: ['EAU','ELECTRICITE','GAZ','ORDURE'],
+                              datasets: [
+                                {
+                                  label: "Consommations",
+                                  backgroundColor: ["#3e95cd","#006400","#F5E592","#374255"],
+                                  data: [eau, elec, gaz, ordure]
+                                }
+                              ]
+                            },
+                            options: {
+                              legend: { display: false },
+                              title: {
+                                display: true,
+                                text: 'Total des consommations'
+                              }
+                            }
+                        });
+                    </script>
+                {% endif %}
+    </div>
+{% endblock %}

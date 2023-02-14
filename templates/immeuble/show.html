@@ -1,0 +1,61 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  <title>afficher sur les Skis</title>
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h3 class="text-primary">Immeubles</h3>
+        <a class="btn btn-outline-success text-dark" href="/immeuble/add">ajouter un Immeuble</a>
+        <br>
+        <br>
+        <div class="container-fluid">
+            <table class="table text-primary table-striped table-bordered">
+                <thead class="table-dark">
+                <tr>
+                    <th>
+                        Numéro d'Immeuble
+                    </th>
+                    <th>
+                        Adresse
+                    </th>
+                    <th>
+                        Nombre d'Appartements
+                    </th>
+                    <th>
+                        État de l'immeuble
+                    </th>
+                    <th>
+                        Opérations
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if immeubles | length >= 1 %}
+                    {% for immeuble in immeubles %}
+                    <tr>
+                        <td class="text-dark">{{ immeuble.NumImmeuble }}</td>
+                        <td class="text-dark">{{ immeuble.Adresse }}</td>
+                        <td class="text-dark">{{ immeuble.NbAppartement }}</td>
+                        <td class="text-dark">
+                            <a class="btn btn-outline-info" href="/immeuble/etat?id={{ immeuble.NumImmeuble }}" >Etat</a>
+                        </td>
+                        <td class="text-dark">
+                            <a class="btn btn-outline-success" href="/immeuble/edit?id={{ immeuble.NumImmeuble }}">editer</a>
+                            <a class="btn btn-outline-danger" href="/immeuble/delete?id={{ immeuble.NumImmeuble }}" >supprimer</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                <tr>
+                    <td>
+                        pas d'immeuble
+                    </td>
+                </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

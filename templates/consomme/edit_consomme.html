@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    <title>Editer une de consommation</title>
+{% endblock %}
+
+{% block body %}
+  <h2>Editer un type de consommation</h2>
+  {% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
+  <form method="post" action="/consomme/edit" >
+    <fieldset>
+        <div class="form-group container-md">
+            <input type="hidden" name="id_consommation" size="18" value="{{ consomme.id_consommation }}" id="id_consommation">
+            <label for="numMois">Numéro de mois :</label><br>
+            <input class="form-control" type="number" name="numMois" max="12" value="{{ consomme.numMois }}" id="numMois" required><br>
+            <label for="libelle">Quantité(s) :</label><br>
+            <input class="form-control" type="text" name="quantite" value="{{ consomme.quantite }}" id="quantite" required><br>
+            <label for="libelle">Type de charge  :</label><br>
+            <select class="form-select" name="IdCharge" required>
+            {% for type in typeCharges %}
+                <option value="{{ type.IdCharge }}"
+                {% if consomme.IdCharge is defined and type.IdCharge ==  consomme.IdCharge %}selected{% endif %}
+                > {{ type.LibellerTypeCharge }} </option>
+            {% endfor %}
+            </select><br>
+
+            <label for="numMois">Numéro d'Immeuble :</label><br>
+            <select class="form-select" name="NumImmeuble" required>
+            {% for type in immeuble %}
+                <option value="{{ type.NumImmeuble }}"
+                {% if consomme.NumImmeuble is defined and type.NumImmeuble == consomme.NumImmeuble %}selected{% endif %}
+                > {{ type.NumImmeuble }} , ({{ type.Adresse }}) </option>
+            {% endfor %}
+            </select><br>
+
+            <input class="btn btn-primary" type="submit" value="Editer" name="Valider" >
+            <a href="show" class="btn btn-danger">Annuler</a>
+        </div>
+    </fieldset>
+  </form>
+{% endblock %}
